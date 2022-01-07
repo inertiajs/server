@@ -15,7 +15,9 @@
   "bugs": {
     "url": "https://github.com/inertiajs/server/issues"
   },
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "source": "src/index.ts",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -25,7 +27,9 @@
     "build": "npm run build:types && npm run build:js",
     "build:types": "tsc --emitDeclarationOnly",
     "build:js": "babel src --out-dir lib --extensions \".ts,.tsx\" --source-maps inline",
-    "lint": "eslint . --ext .js,.ts"
+    "lint": "eslint . --ext .js,.ts",
+    "prepublishOnly": "npm run build",
+    "test": "npm run type-check"
   },
   "devDependencies": {
     "@babel/cli": "^7.16.0",

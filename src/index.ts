@@ -24,11 +24,14 @@ export default (render: AppCallback, port?: number): void => {
 
   createServer(async (request, response) => {
     const dispatchRoute = routes[<string> request.url] || routes['/404']
+    const server = 'Inertia.js SSR'
 
     try {
-      response.writeHead(200, { 'Content-Type': 'application/json', 'Server': 'Inertia.js SSR' })
+      response.writeHead(200, { 'Content-Type': 'application/json', 'Server': server })
       response.write(JSON.stringify(await dispatchRoute(request)))
     } catch (e) {
+      response.writeHead(500, { 'Content-Type': 'text/html', 'Server': server })
+      response.write(e.stack)
       console.error(e)
     }
 

@@ -12,8 +12,9 @@ const readableToString: (readable: IncomingMessage) => Promise<string> = (readab
   readable.on('error', (err) => reject(err))
 })
 
-export default (render: AppCallback, port?: number): void => {
+export default (render: AppCallback, port?: number, host?: string): void => {
   const _port = port || 13714
+  const _host = host || 'localhost'
 
   const routes: Record<string, RouteHandler> = {
     '/health' : async () => ({ status: 'OK', timestamp: Date.now() }),
@@ -33,7 +34,7 @@ export default (render: AppCallback, port?: number): void => {
     }
 
     response.end()
-  }).listen(_port, () => console.log('Inertia SSR server started.'))
+  }).listen(_port, _host, () => console.log('Inertia SSR server started.'))
 
   console.log(`Starting SSR server on port ${_port}...`)
 }
